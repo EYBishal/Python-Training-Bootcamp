@@ -1,0 +1,22 @@
+#Sets
+#No duplicate allowed
+
+nums={1,2,3,4,3,5,2}
+print(nums)
+
+#Another way of initializing empty set
+e=set()
+
+#Add Operations
+s={1,2,3}
+s.add(4)
+print(s)
+s.update([5,6])
+print(s)
+
+#Remove Operations
+s.remove(3)#raises error if not found
+print(s)
+s.discard(3)#does nothing if not found
+s.pop()#removes a random element
+print(s)
