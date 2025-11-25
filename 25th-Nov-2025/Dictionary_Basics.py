@@ -17,3 +17,17 @@ student["email"]="bishal@gmail.com"
 student["city"]="Asansol"
 
 print(student)
+
+#Remove
+student.pop("city")
+del student["age"]
+print(student)
+student.clear()
+
+#print
+for k in student.keys():
+    print(k) #to get keys
+for v in student.values():
+    print(v) #to get values
+for k,v in student.items():
+    print(k,v)# to get both
