@@ -20,3 +20,18 @@ print(s)
 s.discard(3)#does nothing if not found
 s.pop()#removes a random element
 print(s)
+
+a={1,2,3}
+b={3,4,5,6}
+#Union
+print(a|b)
+
+#Intersection||common
+print(a&b)
+
+#Difference
+print(a-b) #gives a value as taking out all the elements common with b
+print(b-a)#gives b value as taking out all the elements common with a
+
+#Symmetric Difference
+print(a^b) #gives what is not present in both a and b
