@@ -39,3 +39,48 @@ class Car:
 #so actually what happend here is we created object and passing the attributes
 car1 = Car("BMW","Mercedes",20000)
 car1.display()
+
+##################################################################
+
+class Employee:
+    def __init__(self, emp_id, name, department, salary):
+        self.name = name
+        self.salary = salary
+        self.department = department
+
+    def display(self):
+        print(self.name)
+        print(self.salary)
+        print(self.department)
+        #print(self.emp_id)
+
+
+emp_1 = Employee(1, "Bishal", "Department A", 100)
+emp_2= Employee(2, "Arun", "Department B", 200)
+
+emp_1.display()
+emp_2.display()
+
+#################################################################
+# created new methods to try out operations
+
+class Bank:
+    def __init__(self, name, balance):
+        self.name = name
+        self.balance = balance
+
+    def deposit(self, amount):
+        self.balance += amount
+
+    def withdraw(self, amount):
+        self.balance -= amount
+
+
+    def print_balance(self):
+        print(self.name)
+        print(self.balance)
+
+bank=Bank("Bishal", 100)
+bank.deposit(100)
+bank.withdraw(10)
+bank.print_balance()
