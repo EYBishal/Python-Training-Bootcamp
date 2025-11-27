@@ -47,6 +47,52 @@ class ScholarAthlete(Student, Athlete):  # Multiple Inheritance
         self.show_athlete_info()
         print("This person excels in both academics and sports!")
 
-# Create object
+
 person = ScholarAthlete("Bishal", "A+", "Football")
 person.display()
+
+################################################################
+
+
+class Teacher:
+    def teach(self):
+        print("Teaching students...")
+
+class ContentCreator:
+    def create_content(self):
+        print("Creating educational content...")
+
+class OnlineTrainer(Teacher, ContentCreator):
+    def start_session(self):
+        print("Starting online training session...")
+        self.teach()
+        self.create_content()
+
+
+trainer = OnlineTrainer()
+trainer.start_session()
+
+
+############################################################################
+
+
+
+class HealthDevice:
+    def track_health(self):
+        print("Tracking health metrics...")
+
+class NotificationDevice:
+    def send_notification(self):
+        print("Sending notifications...")
+
+class SmartWatch(HealthDevice, NotificationDevice):
+    def show_features(self):
+        print("SmartWatch Features:")
+        self.track_health()
+        self.send_notification()
+
+watch = SmartWatch()
+watch.show_features()
+
+
+
