@@ -7,4 +7,4 @@ def automated_letter(name,course):
 
 s=input("enter your name")
 y=input("enter your course")
-automated_letter("Bishal","Python")
+automated_letter(s,y)
