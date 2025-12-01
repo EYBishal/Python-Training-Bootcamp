@@ -16,3 +16,19 @@ data={
 
 df=pd.DataFrame(data)
 print(df)
+
+####################################################
+
+import pandas as pd
+
+data={
+    "Name":["Bishal","Arun","Subham"],
+    "Marks":[87,98,96],
+    "city":["Kolkata","Mumbai","Delhi"]}
+
+
+
+df=pd.DataFrame(data)
+
+df.to_csv("students.csv",index=False)
+print("file Created")
