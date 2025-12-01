@@ -31,3 +31,17 @@ except ValueError:
     print("Please enter a number")
 else:
     print("successful conversion",value)
+
+
+########################################
+
+#raise
+
+def check_age(age):
+    if age < 18:
+        raise ValueError("Age must be greater than or equal to 18")
+    return "Allowed"
+
+print(check_age(18))
+
+#raise here allows to throw error according to us
