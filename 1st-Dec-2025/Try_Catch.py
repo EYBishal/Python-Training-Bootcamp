@@ -8,6 +8,8 @@ except ArithmeticError:
 
 ##################################
 
+#with finally
+
 try:
     f=open("log.txt","r")
     print(f.read())
@@ -18,3 +20,14 @@ finally:
 
 #finally is use for memory management
 #will be execute even if try executes error
+
+#####################################
+
+#with else
+
+try:
+    value =int("50")
+except ValueError:
+    print("Please enter a number")
+else:
+    print("successful conversion",value)
