@@ -1,0 +1,55 @@
+Introduction to Pandas:
+Pandas is a powerful Python library designed for data manipulation and analysis. It provides flexible data structures like Series and DataFrame, making it easy to work with structured data. Pandas is widely used in data science, machine learning, and analytics for tasks such as cleaning, transforming, and visualizing data.
+
+Pandas: From Basics to Advanced
+ Basics
+
+What is Pandas?
+Pandas is a Python library for data manipulation and analysis. Built on NumPy, it provides DataFrame and Series objects for handling structured data.
+
+Key Data Structures
+1. Series - A one-dimensional labeled array.
+Example:
+import pandas as pd
+s = pd.Series([10, 20, 30], index=['a', 'b', 'c'])
+print(s)
+
+2. DataFrame - A two-dimensional labeled data structure (like a table).
+Example:
+data = {'Name': ['Alice', 'Bob'], 'Age': [25, 30]}
+df = pd.DataFrame(data)
+print(df)
+
+Basic Operations
+
+Read Data: df = pd.read_csv('file.csv')
+View Data: df.head(), df.info(), df.describe()
+Select Columns: df['Name'], df[['Name','Age']]
+Filter Rows: df[df['Age'] > 25]
+
+Indexing
+loc → label-based, iloc → position-based
+Example: df.loc[0,'Name'], df.iloc[0,1]
+
+Intermediate to Advanced
+Data Cleaning
+Handle Missing Values: df.dropna(), df.fillna(0)
+Rename Columns: df.rename(columns={'Name':'FullName'}, inplace=True)
+Data Transformation
+Apply Functions: df['Age'] = df['Age'].apply(lambda x: x+1)
+Group By: df.groupby('Department')['Salary'].mean()
+
+Merging & Joining
+Concatenate: pd.concat([df1, df2])
+Merge: pd.merge(df1, df2, on='ID')
+
+Advanced Features
+Pivot Table: df.pivot_table(values='Sales', index='Region', columns='Year', aggfunc='sum')
+MultiIndex: df.set_index(['Region','Year'])
+Time Series: df['Date']=pd.to_datetime(df['Date']); df.set_index('Date').resample('M').sum()
+Performance Tips
+Use df.astype() for correct data types.
+Use df.query() for fast filtering.
+For big data: read_csv(chunksize=...)
+
+Summary: Pandas is powerful for data analysis. Start with Series & DataFrame, then learn grouping, merging, pivoting, and finally time series & performance optimization.
