@@ -45,3 +45,20 @@ def check_age(age):
 print(check_age(18))
 
 #raise here allows to throw error according to us
+
+
+##############################################3
+
+#custom exception
+#here lowbalance.... inherits the exception class
+class LowBalanceError(Exception):
+    pass
+def withdraw(amount,balance):
+    if amount> balance:
+        raise LowBalanceError("Insufficient Balance")
+
+    return balance-amount
+
+
+print(withdraw(105,101))
+
