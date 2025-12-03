@@ -23,3 +23,22 @@ WHERE city='Chicago';
 
 select * from students
 order by age DESC
+
+UPDATE students
+SET city = "Banglore"
+WHERE student_id = 2;
+ 
+
+UPDATE students
+SET city = "Arteta"
+WHERE email = "robert.brown@example.com";
+ 
+ 
+DELETE FROM students
+WHERE student_id = 4;
+ 
+
+DELETE FROM students
+WHERE city = "DELHI";
+
+DROP DATABASE college_db;
