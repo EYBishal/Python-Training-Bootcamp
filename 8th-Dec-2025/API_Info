@@ -1,1 +1,119 @@
+API
+---------
+---------
+An API (Application Programming Interface) is a set of rules and protocols that allows different software applications to communicate with each other.
+APIs enable the exchange of data, features, and functionality between applications, simplifying and accelerating software development.
 
+ Why APIs are important?
+
+Enable integration – Connect different applications and services.
+Simplify development – Developers don’t need to know internal logic, just use endpoints.
+Promote reusability – Same API can be used by multiple clients.
+Support scalability – Helps build modular and distributed systems.
+
+
+✅ Types of APIs
+
+REST API – Uses HTTP methods (GET, POST, PUT, DELETE).
+SOAP API – XML-based protocol for structured communication.
+GraphQL API – Flexible query-based API.
+WebSocket API – For real-time communication.
+
+HTTP REQUESTS
+-------------
+-------------
+.Enable communication – They allow clients (browsers, apps) to talk to servers.
+.Data exchange – Used to send and receive data between client and server.
+.Web functionality – Power all web operations like loading pages, submitting forms, fetching APIs.
+.Standard protocol – Provide a universal way to interact over the internet.
+.Support CRUD operations – Enable Create, Read, Update, Delete actions via methods (GET, POST, PUT, DELETE).
+.Foundation of REST APIs – Essential for modern web and mobile applications.
+.The four basic HTTP request types most commonly used in web development (especially in REST APIs) are:
+
+GET –
+-----
+
+Purpose: Retrieve data from the server.
+Characteristics:
+Should not change server data (safe).
+Can be cached.
+Parameters are usually sent in the URL query string.
+Example: Fetching a list of users.
+
+POST –
+------
+
+Purpose: Send data to the server to create a new resource.
+Characteristics:
+Changes server state.
+Data is sent in the request body.
+Example: Submitting a form to create a new account.
+
+PUT –
+------
+
+Purpose: Update an existing resource (or create it if it doesn’t exist).
+Characteristics:
+Replaces the entire resource with the provided data.
+Idempotent (repeating the same request results in the same state).
+Example: Updating a user’s profile information.
+
+DELETE –
+--------
+
+Purpose: Remove a resource from the server.
+Characteristics:
+Changes server state.
+Idempotent.
+Example: Deleting a blog post
+
+
+STATUS CODE
+-----------
+-----------
+
+HTTP status codes are essential for indicating the outcome of a client's request to a server,
+helping to communicate whether the request was successful or if an error occurred.
+
+.Indicate request outcome – Tell if the request was successful or failed.
+.Standard communication – Provide a universal language between client and server.
+.Error identification – Help developers debug issues quickly.
+.Guide client actions – Inform whether to retry, redirect, or authenticate.
+.Improve user experience – Enable meaningful error messages for users.
+.Enable automation – Allow apps to handle responses programmatically.
+
+1xx: Informational
+
+100 Continue – The server has received the request headers, and the client should proceed to send the request body.
+101 Switching Protocols – The server is switching protocols as requested by the client.
+
+
+✅ 2xx: Success
+
+200 OK – The request was successful.
+201 Created – The request was successful, and a new resource was created.
+204 No Content – The request was successful, but there is no content to return.
+
+
+✅ 3xx: Redirection
+
+301 Moved Permanently – The resource has been moved to a new URL permanently.
+302 Found – The resource is temporarily located at a different URL.
+304 Not Modified – The resource has not changed since the last request.
+
+
+✅ 4xx: Client Errors
+
+400 Bad Request – The server cannot process the request due to client error.
+401 Unauthorized – Authentication is required and has failed or not been provided.
+403 Forbidden – The client does not have permission to access the resource.
+404 Not Found – The requested resource could not be found.
+405 Method Not Allowed – The HTTP method is not supported for the resource.
+
+
+✅ 5xx: Server Errors
+
+500 Internal Server Error – A generic error occurred on the server.
+502 Bad Gateway – The server received an invalid response from an upstream server.
+503 Service Unavailable – The server is temporarily unavailable (e.g., overloaded or down for maintenance).
+504 Gateway Timeout – The server did not receive a timely response from an upstream server.
