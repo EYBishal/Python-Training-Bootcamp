@@ -1,0 +1,47 @@
+1. UI Layer (Presentation Logic)
+
+Purpose: Handles the user interface and presentation logic.
+Technologies Mentioned:
+
+Angular
+React
+
+
+Role: This layer is responsible for rendering the front-end and interacting with the API layer to display data to users.
+
+
+2. API Layer (Business Logic)
+
+Purpose: Acts as the middle layer between the UI and the database. It contains the business logic and exposes APIs for communication.
+Technologies Mentioned:
+
+Java Struts
+.NET Core
+Python Flask
+Python Django
+Express.js
+
+
+Role: Processes requests from the UI, applies business rules, and interacts with the database layer.
+
+
+3. Database Layer (Data)
+
+Purpose: Stores and manages application data.
+Databases Mentioned:
+
+Oracle
+MongoDB
+MySQL
+MSSQL
+Postgres
+
+
+Role: Provides persistent storage and responds to queries from the API layer.
+
+
+Flow of Data
+
+UI Layer → API Layer → Database Layer
+The UI sends requests to the API layer, which processes them and interacts with the database to fetch or store data.
+
