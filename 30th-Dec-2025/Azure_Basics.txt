@@ -1,0 +1,148 @@
+======================================================================
+1) AZURE DATA LAKE STORAGE (ADLS Gen2)
+======================================================================
+Definition:
+Azure Data Lake Storage Gen2 is a cloud-based, massively scalable, hierarchical analytics data repository built on Azure Blob Storage. It stores raw, structured, semi-structured, and unstructured data at petabyte scale. [Sources: Microsoft Learn, GeeksforGeeks]
+
+Citations:
+- https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction
+- https://www.geeksforgeeks.org/devops/what-is-microsoft-azure-data-lake/
+
+Key Features:
+- Hierarchical namespace for fast file directory operations
+- Hadoop/Spark compatible access via ABFS driver
+- Fine-grained security (Azure AD, RBAC, POSIX ACLs)
+- Low-cost tiered storage (Hot/Cool/Archive)
+- Massive scalability and integration with Azure analytics services
+[Sources: Microsoft Learn, SQL School]
+- https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction
+- https://sqlschool.com/blog/azure-data-lake-a-complete-guide/
+
+ASCII PICTURE (ADLS Layers):
+
+  +-------------------------------------------------------------+
+  |                      Azure Data Lake (ADLS)                 |
+  +-------------------------+-----------------------------------+
+  | RAW ZONE                |  Landing of source data           |
+  | (CSV, JSON, logs, img)  |  -- schema-on-read               |
+  +-------------------------+-----------------------------------+
+  | CURATED ZONE            |  Cleaned/validated datasets       |
+  | (Parquet/Delta)         |  -- conformed models             |
+  +-------------------------+-----------------------------------+
+  | ANALYTICS ZONE          |  Aggregates, feature tables       |
+  | (BI/ML ready)           |  -- optimized for query           |
+  +-------------------------------------------------------------+
+
+Real-World Use Case (Retail Customer 360):
+A retailer stores POS transactions, clickstream, supply-chain CSVs, and loyalty data in ADLS raw zone. Databricks processes and enriches, producing curated customer 360 tables for segmentation and recommendation. [Sources: Matillion; Microsoft Learn]
+- https://www.matillion.com/blog/what-is-azure-data-lake
+- https://learn.microsoft.com/en-us/azure/storage/blobs/data-lake-storage-introduction
+
+
+======================================================================
+2) AZURE DATA FACTORY (ADF)
+======================================================================
+Definition:
+Azure Data Factory is a serverless, fully managed ETL/ELT and orchestration service to integrate, move, and transform data across hybrid/multicloud sources. [Sources: Azure product page, DataCamp]
+- https://azure.microsoft.com/en-us/products/data-factory/
+- https://www.datacamp.com/tutorial/azure-data-factory
+
+Key Features:
+- Visual/no-code pipelines; >90 connectors (SQL, Oracle, SAP, SaaS, S3, BigQuery)
+- Mapping Data Flows; Spark-backed transformations
+- Triggers, scheduling, monitoring
+- SSIS lift-and-shift to Azure
+[Sources: Azure product page, GeeksforGeeks]
+- https://azure.microsoft.com/en-us/products/data-factory/
+- https://www.geeksforgeeks.org/sql/microsoft-azure-introduction-to-azure-data-factory/
+
+ASCII PICTURE (ADF Orchestration):
+
+  Sources                Azure Data Factory                   Sinks
+  +---------+            +-------------------+               +-----------+
+  | SAP     | --copy-->  | Pipeline (ETL)    | --load-->     | ADLS      |
+  | Salesforce| --copy-> | Data Flows        | --load-->     | Synapse   |
+  | SQLSrv  | --copy-->  | Integration Runt. | --load-->     | Cosmos DB |
+  +---------+            +-------------------+               +-----------+
+
+Real-World Use Case (ERP+CRM Integration):
+Nightly pipelines extract SAP orders and Salesforce accounts, standardize codes via Mapping Data Flows, and land curated data in ADLS/Synapse for BI and analytics. [Sources: LinkedIn explainer; Azure product page]
+- https://www.linkedin.com/pulse/azure-data-factory-synapse-analytics-databricks-when-use-miamoto-rmrif
+- https://azure.microsoft.com/en-us/products/data-factory/
+
+
+======================================================================
+3) AZURE DATABRICKS
+======================================================================
+Definition:
+Azure Databricks is a collaborative, managed Apache Spark platform for data engineering, analytics, and AI/ML, integrating Delta Lake, MLflow, and Unity Catalog. [Sources: Microsoft Learn; Analytics Vidhya]
+- https://learn.microsoft.com/en-us/azure/databricks/introduction/
+- https://www.analyticsvidhya.com/blog/2023/02/azure-databricks-a-comprehensive-guide/
+
+Key Features:
+- Managed Spark clusters; Py/Scala/SQL/R notebooks
+- Delta Lake (ACID on data lake), MLflow for ML lifecycle
+- Auto-scaling, collaborative workspace, Lakehouse architecture
+[Sources: Microsoft Learn; CloudKeeda]
+- https://learn.microsoft.com/en-us/azure/databricks/introduction/
+- https://cloudkeeda.com/azure-databricks/
+
+ASCII PICTURE (Lakehouse ETL with Databricks):
+
+  +--------------+      +---------------------+      +------------------+
+  |  ADLS Raw    | -->  | Databricks (Spark)  | -->  | Delta Lake (Gold)|
+  +--------------+      |  ETL + ML (MLflow)  |      +------------------+
+                        +---------------------+                 |
+                                    |                           v
+                                    +------------------>  Power BI / Synapse
+
+Real-World Use Cases (from Data + AI Summit 2025):
+- NOV (Energy): processes >3 TB/day streaming data for predictive operations.
+- 7-Eleven: agentic marketing assistant across 13,000+ stores; unified governance.
+- Insulet: 12x faster real-time processing; 97% lower ETL TCO.
+[Source: Databricks customers showcase]
+- https://www.databricks.com/blog/data-intelligence-action-100-data-and-ai-use-cases-databricks-customers
+
+
+======================================================================
+4) AZURE SYNAPSE ANALYTICS
+======================================================================
+Definition:
+Azure Synapse is a unified analytics service combining enterprise SQL data warehousing, Apache Spark big-data, Data Explorer, and built-in pipelines (ADF) in one workspace. Supports serverless and dedicated SQL pools. [Sources: Microsoft Learn]
+- https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is
+
+Key Features:
+- Synapse Studio (unified workspace)
+- Dedicated SQL pools (MPP) for predictable performance; Serverless SQL for lake querying
+- Spark pools for large-scale preparation and ML; Data Explorer for log/time-series
+- Deep integration with Power BI, ADLS, Cosmos DB
+[Sources: Microsoft Learn; K21Academy]
+- https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is
+- https://k21academy.com/azure-data/azure-synapse-analytics/
+
+ASCII PICTURE (Synapse Components):
+
+  +--------------------- Synapse Studio ----------------------+
+  |  Pipelines (ADF)  |  SQL Pools (Dedicated/Serverless)    |
+  |  Spark Pools      |  Data Explorer                       |
+  +----------------------------------------------------------+
+                 |                   |                 |
+                 v                   v                 v
+              ADLS                Power BI          Cosmos DB
+
+Real-World Use Case (DW Modernization):
+Legacy OLAP warehouse migrated to Synapse dedicated SQL pools; Spark handles large transformations; Pipelines orchestrate ingestion; Power BI delivers executive dashboards. [Sources: Microsoft Learn; GetOnData]
+- https://learn.microsoft.com/en-us/azure/synapse-analytics/overview-what-is
+- https://getondata.com/what-is-azure-synapse-a-complete-beginners-guide/
+
+
+======================================================================
+5) COMBINED ARCHITECTURE (All Four Together)
+======================================================================
+Banking Lakehouse Platform:
+1. ADLS stores raw transactions, card swipes, fraud alerts, KYC documents.
+2. ADF orchestrates ingestion from on-prem SQL/mainframe and SaaS.
+3. Databricks runs fraud ML and produces Delta curated tables.
+4. Synapse serves BI/regulatory reporting with dedicated SQL pools & Power BI.
+[Source: DEV community integration patterns]
+- https://dev.to/borisgigovic/azure-data-solutions-data-factory-synapse-data-lake-databricks-integration-2bbk
