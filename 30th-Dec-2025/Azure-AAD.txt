@@ -1,0 +1,121 @@
+Microsoft Entra (formerly Azure Active Directory)
+=================================================
+
+Overview
+--------
+Microsoft Entra is Microsoft’s unified identity and access product family that helps protect access to any app or resource, for any user, from anywhere. The directory and identity service previously known as **Azure Active Directory (Azure AD/AAD)** was rebranded as **Microsoft Entra ID**. The service continues to provide cloud-based identity, single sign-on (SSO), Conditional Access, MFA, device and application management, and integration with on‑premises Active Directory via Azure AD Connect.
+
+Older Name (AAD)
+----------------
+- **Older/previous name:** Azure Active Directory (Azure AD or AAD).
+- **Current name:** Microsoft Entra ID (part of the Microsoft Entra product family, which also includes Entra Permissions Management, Verified ID, Workload Identities, External ID, and more).
+- **What changed:** Primarily the **branding/name**; APIs (Microsoft Graph), service endpoints, and most admin experiences remain compatible, though UI text and documentation now refer to Entra.
+
+Key Concepts: Authentication vs. Authorization
+----------------------------------------------
+- **Authentication (AuthN):** The process of proving identity. Typical methods include passwords, multi‑factor authentication (MFA), FIDO2 security keys, Windows Hello for Business, Passkeys, or passwordless options. Result: An authenticated session and a token (ID token for OpenID Connect and/or an access token for OAuth 2.0).
+- **Authorization (AuthZ):** The process of determining **what** an authenticated identity is allowed to do. In Entra, authorization is enforced through **permissions/roles**, **Conditional Access policies**, **App roles**, **scopes**, **group membership**, and **administrative roles**. Result: The resource (API/app) evaluates the access token’s claims (e.g., scopes, roles, groups) to allow/deny actions.
+- **Protocols:**
+  - **OpenID Connect (OIDC):** Adds authentication (ID tokens) on top of OAuth 2.0.
+  - **OAuth 2.0:** Delegated authorization to access protected resources (access tokens with scopes/roles).
+  - **SAML 2.0 & WS‑Federation:** Common for enterprise SSO to SaaS apps.
+
+Users and Groups in Microsoft Entra
+-----------------------------------
+**Users**
+- Types: Member (internal), Guest (External ID/B2B collaboration), and Service/Workload identities.
+- Attributes: UPN, object ID, email, assigned licenses, sign‑in methods, risk state, Conditional Access, etc.
+- Lifecycle: Provisioning (manual, HR-driven, SCIM), governance (access reviews), and deprovisioning.
+
+**Groups**
+- **Security groups:** Used for access control to apps/resources; appear in tokens via `groups` claim (or overage via `hasgroups`/Graph lookup).
+- **Microsoft 365 groups:** Provide collaboration features (SharePoint site, Planner, mailbox) plus access control.
+- **Dynamic groups:** Membership based on user/device attributes (rules). Useful for auto-targeting policies and app access.
+- **Role-Assignable groups:** Special security groups that can hold Azure AD administrative roles for RBAC.
+
+**Best Practices**
+- Use **least privilege** and assign permissions to **groups**, not individuals.
+- Prefer **dynamic membership** to reduce manual errors.
+- For guests, use **B2B** invitations and policies; apply access reviews and terms of use.
+
+Registering an Application in Microsoft Entra
+---------------------------------------------
+You register applications to integrate authentication and authorization with Entra using OAuth 2.0/OIDC or SAML. Registration creates an **application object** (definition) and a **service principal** (tenant-specific identity) that represents the app in your tenant.
+
+**Common Scenarios**
+- Web app (confidential client): Server-side app that can safely store a secret or certificate.
+- Single-page app (SPA/public client): Browser-based; uses the authorization code flow with PKCE.
+- Native/mobile (public client): Desktop/mobile; uses code + PKCE.
+- Daemon/service (confidential client): Uses **client credentials** (app roles) to call APIs.
+
+Step-by-Step: Portal (entra.microsoft.com)
+-----------------------------------------
+1) **Sign in** to the Microsoft Entra admin center and select **Microsoft Entra ID** → **App registrations** → **New registration**.
+2) **Name** the application and choose **Supported account types**:
+   - **Single-tenant** (only this organization) or **Multitenant** (any organization), and optionally **personal Microsoft accounts**.
+3) **Redirect URI** (if applicable):
+   - Web app: `https://yourapp.com/signin-oidc` (OIDC).
+   - SPA: `https://yourapp.com/auth` (must be HTTPS; can use `http://localhost` for dev).
+   - Mobile/desktop: Use scheme like `myapp://auth` or `http://localhost` with loopback.
+4) Click **Register**. You will get **Application (client) ID** and **Directory (tenant) ID**.
+5) **Authenticate setup**:
+   - **Certificates & secrets:** Add a client secret (short-lived) or upload a certificate (preferred for production).
+   - **Authentication** blade: Configure platform (Web, SPA, Mobile), **redirect URIs**, **logout URL**, **implicit grant** (if needed), **front-channel logout**, and **Allow public client flows**.
+6) **Expose an API** (if your app is an API):
+   - Define **scopes** (delegated permissions) for client apps to request.
+   - Define **app roles** (application permissions) for daemon apps.
+7) **API permissions** (if your app calls Microsoft Graph or other APIs):
+   - Add **Delegated** permissions (requires a signed-in user) or **Application** permissions (daemon).
+   - For many application permissions, an **admin consent** is required. Use **Grant admin consent**.
+8) **Branding & properties**: Add publisher domain, logo, and configure **User assignment required** (for service principals) as needed.
+9) **Enterprise applications**: After registration, the service principal appears here; use it to manage assignments, SSO, and Conditional Access targeting.
+10) **Test** with MSAL libraries (JavaScript, .NET, Python, Java) using authorization code + PKCE or client credentials as appropriate.
+
+CLI/Automation Examples (Azure CLI)
+-----------------------------------
+- **Create app registration**:
+  ```bash
+  az ad app create --display-name "MyApp" --sign-in-audience AzureADMyOrg
+  ```
+- **Add a redirect URI**:
+  ```bash
+  az ad app update --id <appId> --web-redirect-uris https://yourapp.com/signin-oidc
+  ```
+- **Create a client secret**:
+  ```bash
+  az ad app credential reset --id <appId> --display-name prod-secret --years 1
+  ```
+- **Create service principal** and assign to a resource:
+  ```bash
+  az ad sp create --id <appId>
+  az role assignment create --assignee <spObjectId> --role Reader --scope /subscriptions/<subId>
+  ```
+
+Tokens & Claims
+---------------
+- **ID token** (OIDC): For sign-in; contains user info (subject, name, preferred username) and app-specific claims.
+- **Access token** (OAuth 2.0): Presented to APIs; contains `aud`, `scp` (scopes) or `roles` (app roles), issuer, and tenant.
+- **Refresh token**: Allows obtaining new tokens without re-authentication, subject to Conditional Access and token lifetimes.
+
+Security & Governance
+---------------------
+- **Conditional Access:** Enforce MFA, device compliance, location risk, session controls.
+- **Privileged Identity Management (PIM):** Just‑in‑time elevation for admin roles; approval and MFA required.
+- **Identity Protection:** Risk-based policies responding to leaked credentials or risky sign-ins.
+- **Access Reviews:** Periodic certification of group/app assignments, especially for guest users.
+- **Verified ID:** Issue/verify decentralized identity credentials.
+
+Troubleshooting Tips
+--------------------
+- Use **Sign‑in logs** and **Audit logs** in Entra for diagnostics.
+- Decode tokens at **jwt.ms** to verify claims, audience, and expiration.
+- For `groups` claim overage, configure **Group ID claims** or use **Graph** to query group membership.
+- Prefer **MSAL** over ADAL; ensure **redirect URIs** exactly match and use HTTPS.
+
+Glossary
+--------
+- **Tenant:** Dedicated instance of Microsoft Entra for an organization.
+- **Application object:** Global definition of an app.
+- **Service principal:** Tenant-specific instance that can be assigned permissions/roles.
+- **Scopes vs. Roles:** Delegated vs. application permissions.
+- **B2B vs. B2C:** Collaboration between organizations vs. customer identity.
