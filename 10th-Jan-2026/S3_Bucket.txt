@@ -1,0 +1,51 @@
+====================
+       AWS Bucket Types: Complete Guide
+====================
+
+INTRODUCTION:
+AWS S3 buckets are a cornerstone of cloud storage, offering multiple storage classes for different needs.
+
+====================
+DEFINITION:
+An AWS bucket is a container for storing objects in Amazon S3 service.
+
+====================
+TYPES OF BUCKETS:
+1. S3 Standard:
+   - Use Case: Frequently accessed data.
+   - Advantages: High durability, low latency.
+   - Disadvantages: Higher cost for infrequent access.
+
+2. S3 Intelligent-Tiering:
+   - Use Case: Data with unpredictable access patterns.
+   - Advantages: Automatic cost optimization.
+   - Disadvantages: Slight overhead for monitoring.
+
+3. S3 Glacier:
+   - Use Case: Archival storage.
+   - Advantages: Extremely low cost.
+   - Disadvantages: Retrieval takes hours.
+
+4. S3 Glacier Deep Archive:
+   - Use Case: Long-term archival.
+   - Advantages: Cheapest storage.
+   - Disadvantages: Retrieval is very slow.
+
+====================
+ADVANTAGES & DISADVANTAGES:
+- Advantages: Scalability, durability, global availability.
+- Disadvantages: Retrieval delays for archival classes.
+
+====================
+DIFFERENCES BETWEEN TYPES:
+- Standard vs Glacier: Speed vs Cost.
+- Intelligent-Tiering vs Standard: Automation vs Manual management.
+
+====================
+REAL-WORLD EXAMPLES:
+- Media companies use S3 Standard for streaming content.
+- Healthcare uses Glacier for storing patient records long-term.
+
+====================
+SUMMARY:
+AWS buckets provide flexible storage options tailored to cost and performance needs.
